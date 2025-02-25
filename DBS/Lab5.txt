@@ -1,0 +1,55 @@
+Q1.
+
+SELECT Bdate, Address FROM EMPLOYEE WHERE Fname = 'John' AND Minit = 'B' AND Lname = 'Smith'; 
+
+SELECT E.Fname, E.Lname, E.Address FROM EMPLOYEE E JOIN DEPARTMENT1 D ON E.Dno = D.Dnumber WHERE D.Dname = 'Research';
+
+Q2.
+
+SELECT P.Pnumber, P.Dnum, M.Lname, M.Address, M.Bdate FROM PROJECT P JOIN DEPARTMENT1 D ON P.Dnum = D.Dnumber JOIN EMPLOYEE M ON D.Mgr_ssn = M.Ssn WHERE P.Plocation = 'Stafford';
+
+Q3.
+
+SELECT E.Fname, E.Lname, S.Fname AS Supervisor_Fname, S.Lname AS Supervisor_Lname FROM EMPLOYEE E LEFT JOIN EMPLOYEE S ON E.Super_ssn = S.Ssn;
+
+Q4.
+
+SELECT DISTINCT P.Pnumber FROM PROJECT P JOIN WORKS_ON W ON P.Pnumber = W.Pno JOIN EMPLOYEE E ON W.Essn = E.Ssn WHERE E.Lname = 'Smith' UNION SELECT DISTINCT P.Pnumber FROM PROJECT P JOIN DEPARTMENT D ON P.Dnum = D.Dnumber JOIN EMPLOYEE E ON D.Mgr_ssn = E.Ssn WHERE E.Lname = 'Smith';
+
+Q5.
+
+SELECT E.Fname, E.Lname, E.Salary * 1.1 AS New_Salary FROM EMPLOYEE E JOIN WORKS_ON W ON E.Ssn = W.Essn JOIN PROJECT P ON W.Pno = P.Pnumber WHERE P.Pname = 'ProductX';
+
+Q6.
+
+SELECT E.Fname, E.Lname, P.Pname FROM EMPLOYEE E JOIN WORKS_ON W ON E.Ssn = W.Essn JOIN PROJECT P ON W.Pno = P.Pnumber ORDER BY E.Dno, E.Lname, E.Fname;
+
+Q7.
+
+SELECT E.Fname, E.Lname FROM EMPLOYEE E JOIN DEPENDENT D ON E.Ssn = D.Essn WHERE E.Fname = D.Dependent_name AND E.Sex = D.Sex;
+
+Q8.
+
+SELECT E.Fname, E.Lname FROM EMPLOYEE E LEFT JOIN DEPENDENT D ON E.Ssn = D.Essn WHERE D.Essn IS NULL;
+
+Q9.
+
+SELECT E.Fname, E.Lname FROM EMPLOYEE E JOIN DEPENDENT D ON E.Ssn = D.Essn WHERE E.Ssn IN (SELECT Mgr_ssn FROM DEPARTMENT1);
+
+Q10.
+
+SELECT SUM(Salary), MAX(Salary), MIN(Salary), AVG(Salary) FROM EMPLOYEE;
+
+Q11.
+
+SELECT P.Pnumber, P.Pname, COUNT(W.Essn) AS Employee_Count FROM PROJECT P LEFT JOIN WORKS_ON W ON P.Pnumber = W.Pno GROUP BY P.Pnumber, P.Pname;
+
+Q12.
+
+SELECT P.Pnumber, P.Pname, COUNT(W.Essn) AS Employee_Count FROM PROJECT P JOIN WORKS_ON W ON P.Pnumber = W.Pno GROUP BY P.Pnumber, P.Pname HAVING COUNT(W.Essn) > 2;
+
+Q13.
+
+SELECT D.Dnumber, COUNT(E.Ssn) AS Employee_Count FROM DEPARTMENT1 D JOIN EMPLOYEE E ON D.Dnumber = E.Dno WHERE E.Salary > 40000 GROUP BY D.Dnumber HAVING COUNT(E.Ssn) > 5;
+
+

@@ -1,0 +1,86 @@
+EXAMPLE:
+
+Create Table BRANCH(Branch_name varchar(15) primary key, Branch_city varchar(20), Assets number(10));
+
+Insert into BRANCH(Branch_name, Branch_city, Assets) values('SBI', 'UDUPI', 123456);
+
+Insert into BRANCH(Branch_name, Branch_city, Assets) values('BOB', 'KARKALA', 654321);
+
+Insert into BRANCH(Branch_name, Branch_city, Assets) values('AXIS', 'MANIPAL', 124356);
+
+Insert into BRANCH(Branch_name, Branch_city, Assets) values('HDFC', 'MANGALORE', 653421);
+ 
+Insert into BRANCH(Branch_name, Branch_city, Assets) values('FEDERAL', 'GOA', 123654);
+
+Create Table ACCOUNT(Account_number number(10) primary key, Branch_name varchar(15) references BRANCH, Balance number(8));
+
+Insert into ACCOUNT(Account_number, Branch_name, Balance) values(123456789, 'SBI', 2500);
+
+Insert into ACCOUNT(Account_number, Branch_name, Balance) values(987654321, 'BOB', 3000);
+
+Insert into ACCOUNT(Account_number, Branch_name, Balance) values(543187692, 'FEDERAL', 1500);
+
+Insert into ACCOUNT(Account_number, Branch_name, Balance) values(729168354, 'AXIS', 4300);
+
+Insert into ACCOUNT(Account_number, Branch_name, Balance) values(832154679, 'HDFC', 2700);
+
+Create Table CUSTOMER(Customer_name varchar(20) primary key, Customer_street varchar(15), Customer_city varchar(10));
+
+Insert into CUSTOMER(Customer_name, Customer_street, Customer_city) values('Akash', 'Gola Road', 'Patna');
+
+Insert into CUSTOMER(Customer_name, Customer_street, Customer_city) values('Payal', 'Meera Road', 'Ranchi');
+
+Insert into CUSTOMER(Customer_name, Customer_street, Customer_city) values('Khushi', 'Boring Road', 'Nagpur');
+
+Insert into CUSTOMER(Customer_name, Customer_street, Customer_city) values('Arnav', 'Atal Path', 'Delhi');
+
+Insert into CUSTOMER(Customer_name, Customer_street, Customer_city) values('Lavanya', 'Gandhi Chawk', 'Banaras');
+
+Create Table LOAN(Loan_number number(10) primary key, Branch_name varchar(15) references BRANCH, Amount number(10));
+
+Insert into LOAN(Loan_number, Branch_name, Amount) values(101, 'SBI', 1200);
+
+Insert into LOAN(Loan_number, Branch_name, Amount) values(102, 'HDFC', 3100);
+
+Insert into LOAN(Loan_number, Branch_name, Amount) values(103, 'AXIS', 1900);
+
+Insert into LOAN(Loan_number, Branch_name, Amount) values(104, 'FEDERAL', 2700);
+
+Insert into LOAN(Loan_number, Branch_name, Amount) values(105, 'BOB', 2300);
+
+Create Table DEPOSITOR(Customer_name varchar(2) references CUSTOMER, Account_number number(10) references ACCOUNT, primary key(Customer_name, Account_Number));
+
+Insert into Table DEPOSITOR(Customer_Name, Account_number) values('Akash', 123456789);
+
+Create Table Borrower(Customer_Name varchar(2) references CUSTOMER, Loan_number number(10) references LOAN, primary key(Customer_name, Loan_number));
+
+```````````````````````````````````````````````````````````````````````````````````````````````````````````````
+LAB1:
+
+create table employee(emp_no number(5), emp_name varchar(20), emp_address varchar(20));
+
+insert into employee values(101, 'Prisha', 'Patna');
+
+insert into employee values(102, 'Poorvi', 'Karwar');
+
+insert into employee values(103, 'Pavana', 'Manipal');
+
+insert into employee values(104, 'Shaurya', 'Mangalore');
+
+insert into employee values(105, 'Udit', 'Manipal');
+
+select emp_name from employee;
+
+select emp_name from employee where emp_address='Manipal';
+
+alter table employee add(salary number(5));
+
+update employee set salary=2500;
+
+desc employee;
+
+delete from employee where emp_address='Mangalore';
+
+rename employee to employee1;
+
+drop table employee1;

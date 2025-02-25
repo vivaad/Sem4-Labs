@@ -1,0 +1,81 @@
+Q1. 
+
+Create Table Employee(EmpNo number(5) primary key, EmpName varchar(15) not null, Gender varchar(1) not null, Salary number(5) not null, Address varchar(10)not null, DNo number(3), check(Gender in('M', 'F')));
+
+Q2.
+
+Create Table Department(DeptNo number(3) primary key, DeptName varchar(10), Location varchar(15));
+
+Q3.
+
+Alter table Employee add constraint DNo foreign key (DNo) references Department(DeptNo);
+
+Q4.
+
+ Insert into Department values(231, 'Literature', 'Patna');
+ Insert into Employee values(10011, 'Kalki', 'F', 25000, 'Chennai', 231);
+
+Q5.
+
+Insert into Department values(231, 'SST', 'Ranchi');
+Insert into Employee values(10011, 'Prerna', 'O', 26000, 'Delhi', 231);
+
+Q6.
+
+//We cannot modify/delete a tupple violating any constraint because it cannot be inserted in the first place.
+
+Q7.
+ 
+ ALTER TABLE Employee DROP CONSTRAINT fk_dno;
+ ALTER TABLE Employee ADD CONSTRAINT fk_dno FOREIGN KEY (DNo) REFERENCES    
+ Department(DeptNo) ON DELETE CASCADE;
+
+Q8.
+
+ Alter Table Employee modify (Constraint s1 salary default 10000);
+
+Q9.
+
+select name, dept_name from student;
+
+Q10.
+
+select name from instructor where dept_name='Comp. Sci.';
+
+Q11.
+
+select title from course where dept_name='Comp. Sci.'and credits=3.0;
+
+Q12.
+
+select title from course, takes where takes.course_id=course.course_id and id=12345;
+
+Q13.
+ select name from instructor where salary>40000 and salary<90000;
+
+Q14.
+ select id from instructor where id not in(select id from teaches);
+
+Q15.
+select name, title, year from student natural join takes natural join course natural join section where room_number='514';
+
+Q16.
+
+Q17.
+SELECT DISTINCT T.name
+FROM instructor T, instructor S
+WHERE T.salary > S.salary
+  AND S.dept_name = 'Comp. Sci.';
+
+
+Q18.
+ 
+ select name from instructors where dept_name like '%ch%';
+
+
+
+
+
+
+
+
