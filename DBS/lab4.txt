@@ -1,0 +1,136 @@
+1.
+select course_id,count(id)
+from takes
+group by course_id;
+
+2.
+select dept_name,count(id) count_students
+from student
+group by dept_name
+having count(id)>10;
+
+3.
+select dept_name,count(dept_name) courses_number
+from course
+group by dept_name;
+
+4.
+select dept_name, avg(salary) avg_sal
+from instructor
+group by dept_name
+having avg(salary)>42000
+
+5. select sec_id,count(id)
+from takes
+where semester='Spring' and year='2009'
+group by sec_id;
+
+6.select course_id, prereq_id
+from prereq
+order by course_id asc;
+
+7. select *
+from instructor
+order by salary desc;
+
+8.
+with max_salary_dept(dept_name, max_sum_salary) as (
+    select dept_name, sum(salary) as max_sum_salary
+    from instructor
+    group by dept_name
+)
+select dept_name, max_sum_salary
+from max_salary_dept
+where max_sum_salary = (select max(max_sum_salary) from max_salary_dept);
+
+9.
+with avg_salary_dept(dept_name, avg_salary) as (
+    select dept_name, avg(salary) as avg_salary
+    from instructor
+    group by dept_name
+)
+select dept_name, avg_salary
+from avg_salary_dept
+where avg_salary>42000;
+
+10.
+   with sec_enroll(sec_id, max_num) as (
+    select sec_id, count(id) as max_num
+    from takes
+    group by sec_id
+)
+select sec_id, max_num
+from sec_enroll
+where max_num = (select max(max_num) from sec_enroll);
+
+11.
+select name,T.id
+from instructor T
+where not exists((select id from student where dept_name='Comp. Sci.') minus (select takes.id from takes, teaches S where takes.course_id=S.course_id and S.id=T.id));
+
+12.
+with avg_salary_dept(dept_name, avg_salary,count_instructor) as (
+    select dept_name, avg(salary) as avg_salary, count(*) as count_instructor
+    from instructor
+    group by dept_name
+)
+select dept_name, avg_salary,count_instructor
+from avg_salary_dept
+where avg_salary>42000 and count_instructor<5;
+
+13.
+
+
+with max_budget_dept(dept_name, max_budget) as (
+    select dept_name, max(budget) as max_budget
+    from department
+    group by dept_name
+)
+select dept_name, max_budget
+from max_budget_dept
+where max_budget = (select max(max_budget) from max_budget_dept);
+
+
+14.
+with total_salary_per_dept as (
+    select dept_name, sum(salary) as total_salary
+    from instructor
+    group by dept_name
+), avg_total_salary as (
+    select avg(total_salary) as avg_salary
+    from total_salary_per_dept
+)
+select dept_name, total_salary
+from total_salary_per_dept
+where total_salary > (select avg_salary from avg_total_salary);
+
+
+15.
+BEGIN;
+
+-- Set a savepoint before updating
+SAVEPOINT before_update;
+
+UPDATE student
+SET dept_name = 'IT'
+WHERE dept_name = 'CSE';
+
+-- Inspect changes or decide to rollback
+ROLLBACK TO SAVEPOINT before_update;
+
+-- Commit if satisfied (Optional)
+COMMIT;
+
+
+16.
+begin;
+
+update instructor
+set salary = salary * 1.03
+where salary > 100000;
+
+update instructor
+set salary = salary * 1.05
+where salary <= 100000;
+
+commit;
